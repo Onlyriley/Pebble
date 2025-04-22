@@ -6,6 +6,8 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
+char *expand_env(const char *arg);
+
 /* add '/bin/' unless it's a ./path */
 void add_bin_prefix(char **args)
 {
@@ -24,7 +26,7 @@ int tokenize_command(char *input, char **args)
     char *tok = strtok(input, " ");
     while (tok && i < NUM_MAX_ARGS - 1)
     {
-        args[i++] = tok;
+        args[i++] = expand_env(tok);
         tok = strtok(NULL, " ");
     }
     args[i] = NULL;
@@ -147,4 +149,12 @@ void exec_command(int argCount, char **args)
         else
             printf("Process %d running in background\n", pid);
     }
+}
+
+char *expand_env(const char *arg)
+{
+    if (arg[0] != '$')
+        return strdup(arg);
+    const char *var = getenv(arg + 1);
+    return var ? strdup(var) : strdup("");
 }

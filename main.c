@@ -54,6 +54,10 @@ int main(void)
         {
             exec_command(argCount, args);
         }
+        for (int i = 0; i < argCount; i++)
+        {
+            free(args[i]);
+        }
     }
 
     return 0;

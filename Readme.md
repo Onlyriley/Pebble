@@ -2,11 +2,11 @@
 
 <div align="center">
   <pre>
- ____  _____ ____  ____  _      _      
-|  _ \| ____| __ )| __ )| |    | |     
-| |_) |  _| |  _ \|  _ \| |    | |     
-|  __/| |___| |_) | |_) | |___ | |___  
-|_|   |_____|____/|____/|_____|_____|
+<span style="color: #4FC3F7"> ____  _____ ____  ____  _      _      </span>
+<span style="color: #81C784">|  _ \| ____| __ )| __ )| |    | |     </span>
+<span style="color: #FFD54F">| |_) |  _| |  _ \|  _ \| |    | |     </span>
+<span style="color: #E57373">|  __/| |___| |_) | |_) | |___ | |___  </span>
+<span style="color: #CE93D8">|_|   |_____|____/|____/|_____|_____| </span>
   </pre>
   <p><em>By Riley Simmons</em></p>
 </div>
@@ -17,7 +17,10 @@ Pebble is a lightweight, C-powered command-line shell with a splash of fun! Buil
 
 ## 🚀 Features
 
-- **Interactive Prompt** with command history (using GNU Readline)
+- **Interactive Prompt** with command history and **arrow key navigation** (using GNU Readline)
+- **Tab Completion** for filenames and commands
+- **Environment Variable Expansion** like `$HOME`, `$PATH`, etc.
+- **Syntax Highlighted Prompt** with current directory
 - **Built-in Commands**: `cd`, `exit`, and `delay <sec> <cmd>`
 - **Background Execution** via `&`
 - **Pipelines & Redirection** (`|`, `<`, `>`, `>>`)
@@ -56,11 +59,12 @@ make
 ./pebble
 
 # Try built-in commands
-Pebble> cd ~/projects
-Pebble> delay 5 echo "Hello after 5 seconds"
-Pebble> ls -l | grep ".c"
-Pebble> sleep 10 &
-Pebble> exit
+Pebble ~/projects> cd ~/projects
+Pebble ~/projects> delay 5 echo "Hello after 5 seconds"
+Pebble ~/projects> echo $HOME
+Pebble ~/projects> ls -l | grep ".c"
+Pebble ~/projects> sleep 10 &
+Pebble ~/projects> exit
 ```
 
 ## 📝 Code Structure
@@ -69,17 +73,18 @@ Pebble> exit
 ├── Makefile         # Build script
 ├── shell.h          # Public API
 ├── main.c           # Core loop & built-ins
-├── input.c          # Readline-based input & history
-├── exec.c           # Command execution, pipes, redirection
+├── input.c          # Readline input, tab-completion & history
+├── exec.c           # Command execution, env var expansion, redirection
 ├── delay.c          # Delay queue & scheduler thread
-└── visuals.c        # ASCII banner & clear-screen
+└── visuals.c        # ASCII banner, colored prompt, clear-screen
 ```
 
 ## 🎨 Customize
 
 - **Banner**: Edit `visuals.c` for your own ASCII art
-- **Prompt**: Change the `readline("Pebble> ")` call in `input.c`
+- **Prompt Colors**: Modify ANSI codes in `visuals.c` prompt
 - **Built-ins**: Extend `main.c` with new commands
+- **Tab Completion**: Extend to search `$PATH` if desired
 
 ## 📜 License
 
@@ -88,4 +93,3 @@ This project is released under the MIT License. See [LICENSE](LICENSE) for detai
 ---
 
 <sub>Made with ❤️ by Riley Simmons and powered by C & ☕</sub>
-
